@@ -1,0 +1,34 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#home {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(231, 138, 138);
+    width: 100%;
+    height: 70px;
+ 
+}
+
+#home h1 {
+    margin-left: 200px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+#option {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    margin-right: 250px;
+
+}
+
+a {
+    text-decoration: none;
+    color:white;
+}

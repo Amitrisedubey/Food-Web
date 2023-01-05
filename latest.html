@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+        .imgg {
+            width: 600px;
+            height: 500px;
+        }
+
+        #foods>div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url(https://img.freepik.com/free-photo/abstract-luxury-gradient-blue-background-smooth-dark-blue-with-black-vignette-studio-banner_1258-52379.jpg?size=626&ext=jpg&ga=GA1.2.943858959.1672897469);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbar">
+
+    </div>
+    <div id="foods"></div>
+</body>
+
+</html>
+<script>
+    async function getData() {
+        let res = await fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+        let data = await res.json()
+        let datafood = data.meals
+        console.log(datafood)
+        display(datafood)
+    }
+    getData()
+
+    function display(foodData){
+     foods.innerHTML=null;
+     foodData.forEach((foodsss)=>{
+       let image_div=document.createElement("div")
+       let image=document.createElement("img")
+       image.className+="imgg"
+       image.src=foodsss.strMealThumb;
+       let Cuisine=document.createElement("h3");
+       Cuisine.innerHTML="Cuisine:-"+" "+foodsss.strArea;
+       Cuisine.style.paddingTop="15px"
+       Cuisine.style.paddingLeft="8%"
+       let category=document.createElement("h3");
+       category.innerHTML="Category:-"+" "+foodsss.strCategory
+       category.style.paddingTop="15px"
+       category.style.paddingLeft="8%"
+       let name=document.createElement("h1")
+       name.innerHTML=foodsss.strMeal
+       name.style.textAlign="center"
+       name.style.color="blue"
+       name.style.paddingTop="5px"
+       let ingrediants=document.createElement("h3")
+       ingrediants.innerHTML="Ingrediants:-"+" "+foodsss.strIngredient1+" "+foodsss.strIngredient2+" "+foodsss.strIngredient3+" "+foodsss.strIngredient4+" "+foodsss.strIngredient5+" "+foodsss.strIngredient6+" "+foodsss.strIngredient7+" "+foodsss.strIngredient8+" "+foodsss.strIngredient9+" "+foodsss.strIngredient8+" "+foodsss.strIngredient9+" "+foodsss.strIngredient10+" "+foodsss.strIngredient11+" "+foodsss.strIngredient12+" "+foodsss.strIngredient13+" "+foodsss.strIngredient14+" "+foodsss.strIngredient15+" "+foodsss.strIngredient16+" "+foodsss.strIngredient17+" "+foodsss.strIngredient18+" "+foodsss.strIngredient19+" "+foodsss.strIngredient20
+       ingrediants.style.paddingTop="15px"
+       ingrediants.style.color="brown"
+       ingrediants.style.paddingLeft="8%"
+       let instruction=document.createElement("p")
+       instruction.innerHTML="Instruction:-"+" "+foodsss.strInstructions;
+       instruction.style.paddingTop="15px"
+       instruction.style.wordSpacing="12px"
+       instruction.style.paddingLeft="8%"
+       instruction.style.paddingRight="8%"
+       instruction.style.color="green"
+       instruction.style.fontSize="20px"
+       let source=document.createElement("h3")
+       source.innerHTML="Sources:-"+" "+foodsss.strSource
+       source.style.paddingTop="15px"
+       source.style.color="green"
+       source.style.paddingLeft="8%"
+       let youtube=document.createElement("h3")
+       youtube.innerHTML="Youtube:-"+" "+foodsss.strYoutube
+       youtube.style.paddingTop="15px"
+       youtube.style.paddingLeft="8%"
+       image_div.append(image)
+       foods.append(image_div,name,Cuisine,category,ingrediants,instruction,source,youtube)
+    
+     })
+    }
+</script>
+
+<script type="module">
+    import navbar from "./components/navbar.js"
+    let Div_navbar = document.getElementById("navbar");
+    Div_navbar.innerHTML = navbar()
+    //https://www.themealdb.com/api/json/v1/1/search.php?s=a
+</script>

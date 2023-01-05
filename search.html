@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+         #foods{
+        padding-top: 20px;
+        display:grid;
+        grid-template-columns: repeat(5,1fr);
+        gap: 25px;
+      }
+      #foodss{
+        margin: auto;
+            margin-left: 13%;
+      }
+      
+      /* .div{
+       padding-bottom: 35px;
+      } */
+      .iii{
+        width:100%;
+         border-radius: 20px;
+      }
+      h5,h1{
+        text-align: center;
+      }
+      #div-input{
+        margin-top:5px;
+      }
+      input[type=text]{
+        margin-left: 32%;
+        width: 450px;
+        height: 40px;
+        text-align: center;
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+      }
+      button{
+        background-color: rgb(218, 43, 43);
+        color: white;
+        border: none;
+        width: 85px;
+        height:40px;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+      }
+    </style>
+</head>
+
+<body>
+   <div id="navbar">
+
+   </div>
+   <div id="div-input">
+    <input type="text" placeholder="Search for Dishes" id="inp">
+    <button onclick="getData()">Search</button>
+   </div>
+   <div id="foods"></div>
+   <div id="foodss"></div>
+    
+</body>
+
+</html>
+<script>
+    let foods=document.getElementById("foods")
+    let foodss=document.getElementById("foodss")
+    async function getData(){
+        let myInput=document.getElementById("inp").value
+        //console.log(myInput)
+        let res=await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${myInput}`);
+        let data= await res.json()
+        Datafood=data.meals
+        console.log(Datafood)
+        //not available------------------------------------------------------------
+       if(Datafood==undefined){
+        foods.innerHTML = null;
+        foodss.innerHTML=null;
+          let div = document.createElement("div");
+          div.className="div"
+          let image_div=document.createElement("div")
+          image_div.className+="imgdiv"
+        
+            let img = document.createElement("img");
+            img.src = "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/empty-plate_fdc3wq";
+            img.style.width = "250px";
+            img.style.height = "250px"
+            img.style.marginLeft = "38%"
+            let h2 = document.createElement("h2");
+            h2.innerHTML = "Oh! There’s not much left"
+            h2.style.textAlign = "center";
+            h2.style.paddingBottom="15px"
+            let p1 = document.createElement("p");
+            p1.innerHTML = "We can’t find anything related to your search.";
+            p1.style.textAlign = "center";
+            let p2 = document.createElement("p");
+            p2.innerHTML = "Try a different search.";
+            p2.style.textAlign = "center";
+            image_div.append(img)
+            foodss.append(div)
+            div.append(image_div, h2, p1, p2)
+       }else{
+        display(Datafood)
+       }
+        // display(Datafood)
+    }
+    function display(dfood){
+      foods.innerHTML=null;
+      dfood.forEach(({strArea,strCategory,strMealThumb,strMeal})=>{
+        let div1=document.createElement("div")
+        div1.className+="div1"
+        let image_div=document.createElement("div")
+        image_div.className="imgdiv";
+        let image=document.createElement("img")
+        image.className="iii"
+        image.src=strMealThumb;
+        let Cuisine=document.createElement("h5")
+        Cuisine.innerHTML="Cuisine:-"+" "+strArea;
+        let category=document.createElement("h5")
+        category.innerHTML="Category:-"+" "+strCategory;
+        let nam=document.createElement("h1");
+        nam.innerHTML=strMeal
+        div1.onclick=function(){
+            localStorage.setItem("nam",JSON.stringify(strMeal))
+            window.location.href = "Searchitems.html"
+        }
+        image_div.append(image)
+        div1.append(image_div,nam,Cuisine,category)
+        foods.append(div1)
+      })
+    }
+ 
+    
+</script>
+<script type="module">
+    import navbar from "./components/navbar.js"
+    let Div_navbar=document.getElementById("navbar");
+    Div_navbar.innerHTML=navbar()
+    //https://www.themealdb.com/api/json/v1/1/search.php?s=a
+    //https://www.themealdb.com/api/json/v1/1/search.php?s=${myInput}
+</script>

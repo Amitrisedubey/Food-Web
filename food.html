@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+    <style>
+       
+        
+        #heading{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 300px;
+          background: url(./images/Indian_Food_Cover.jpg);
+        
+        }
+        #ht{
+            color:brown;
+            font-size: 65px;
+            text-align: center;
+            font-style: oblique;
+        }
+        #ht:hover{
+           font-style: initial;
+        }
+      #foods{
+        padding-top: 20px;
+        display:grid;
+        grid-template-columns: repeat(5,1fr);
+        gap: 25px;
+      }
+      /* .main{
+      
+        
+      } */
+      img{
+        width:100%;
+         border-radius: 20px;
+      }
+      h3,p{
+        text-align: center;
+      }
+    </style>
+</head>
+
+<body>
+   <div id="navbar">
+
+   </div>
+   <div id="heading">
+    
+   </div>
+   <h1 id="ht">Food World Dhanbad</h1>
+   <div id="foods"></div>
+
+</body>
+
+</html>
+<script>
+let foods=document.getElementById("foods")
+async function getData(){
+     let res=await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=a`);
+     let data=await res.json()
+     let foods=data.meals
+     console.log(foods)
+     display(foods)
+}
+getData()
+
+function display(food){
+    foods.innerHTML=null;
+    food.forEach(({strMealThumb,strMeal})=>{
+      let div1=document.createElement("div")
+      div1.className+="main"
+      let image_div=document.createElement("div");
+      image_div.className+="imagediv"
+      let image=document.createElement("img");
+      image.src=strMealThumb
+      let foodName=document.createElement("h3");
+      foodName.innerText=strMeal
+      image_div.append(image)
+      let price=document.createElement("p");
+      price.innerText="₹"+" "+Math.floor(Math.random(3)*500)
+      div1.append(image_div,foodName,price)
+      foods.append(div1)
+    })
+}
+ 
+
+</script>
+
+<script type="module">
+    import navbar from "./components/navbar.js"
+    let Div_navbar=document.getElementById("navbar");
+    Div_navbar.innerHTML=navbar()
+    
+</script>
